@@ -14,9 +14,9 @@ import mg.itu.ticketing.repository.vol.parametre.ParametreReservationRepo;
 
 public class ReservationValidator extends CustomValidator<ReservationValidation,ReservationDTO> {
 
-    ParametreReservationRepo parametreReservationRepo=new ParametreReservationRepo();
+    ParametreReservationRepo parametreReservationRepo = new ParametreReservationRepo();
 
-    VolRepository volRepository=new VolRepository();
+    VolRepository volRepository = new VolRepository();
 
     @Override
     public ValidationException validate(ReservationDTO reservationDTO, ReservationValidation reservationValidation) {
