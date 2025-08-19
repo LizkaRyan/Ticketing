@@ -12,6 +12,7 @@ import mg.itu.ticketing.dto.LoginDTO;
 import mg.itu.ticketing.repository.personnel.UtilisateurRepository;
 
 import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDate;
 
 @Controller(mapping = "/utilisateur")
 public class UtilisateurController {
@@ -36,5 +37,10 @@ public class UtilisateurController {
     @Get("/csv")
     public CsvFile exportCsv() throws InvocationTargetException, IllegalAccessException {
         return new CsvFile("utilisateur",utilisateurRepository.findAllUser(),",");
+    }
+
+    @Get("/tableau-bord")
+    public ModelAndView tableauBord(@Param(name = "date") String date){
+        return new ModelAndView("tableau_bord");
     }
 }

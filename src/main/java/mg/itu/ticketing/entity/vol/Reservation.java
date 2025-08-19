@@ -3,20 +3,14 @@ package mg.itu.ticketing.entity.vol;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import mg.itu.ticketing.dto.PassePortDTO;
 import mg.itu.ticketing.dto.reservation.PasseportPdfData;
 import mg.itu.ticketing.dto.reservation.ReservationPdfData;
 import mg.itu.ticketing.entity.avion.TypeSiege;
 import mg.itu.ticketing.entity.personnel.Utilisateur;
 
-import javax.servlet.http.Part;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -35,6 +29,9 @@ public class Reservation {
 
     @Column(name = "nb_passager")
     private Integer nbPassager;
+
+    @Column(name = "paye")
+    private Integer paye;
 
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "id_vol")

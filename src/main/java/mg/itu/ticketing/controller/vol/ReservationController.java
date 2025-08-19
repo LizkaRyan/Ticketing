@@ -55,6 +55,12 @@ public class ReservationController {
         return reservationRepository.save(reservation,session);
     }
 
+    @Get("/paye")
+    public String insert(@Param(name = "idReservation") String idReservation) throws Exception {
+        reservationRepository.pay(idReservation);
+        return "redirect:/Ticketing/reservation";
+    }
+
     @RestMethod
     @Get("pdf")
     @Authenticate(NormalAuthenticator.class)

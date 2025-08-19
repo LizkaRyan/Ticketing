@@ -114,6 +114,7 @@
                 <th>Avion</th>
                 <th>Destination</th>
                 <th>Annulation</th>
+                <th>Payer</th>
             </tr>
             </thead>
             <tbody>
@@ -125,6 +126,12 @@
                 <td><%= reservation.getVol().getAvion().getAvion() %></td>
                 <td><%= reservation.getVol().getDestination().getVille() %></td>
                 <td><a href="/Ticketing/annulation?idReservation=<%= reservation.getIdReservation() %>">Annuler</a></td>
+                <% if(reservation.getPaye() == 0){ %>
+                <td><a href="/Ticketing/reservation/paye?idReservation=<%= reservation.getIdReservation() %>">Payer</a></td>
+                <% } %>
+                <% if(reservation.getPaye() == 1){ %>
+                <td><span class="status completed">Payé</span></td>
+                <% } %>
                 <!--<td><span class="status completed">Terminé</span></td>-->
                 <!--<td><span class="status pending">En attente</span></td>-->
                 <!--<td><span class="status in-progress">En cours</span></td>-->

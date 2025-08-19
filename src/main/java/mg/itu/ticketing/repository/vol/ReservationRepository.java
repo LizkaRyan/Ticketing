@@ -96,4 +96,9 @@ public class ReservationRepository extends GenericRepository<Reservation,String>
                 });
     }
 
+    public void pay(String idReservation) {
+        Reservation reservation = this.findReservationById(idReservation);
+        reservation.setPaye(1);
+        this.save(reservation);
+    }
 }

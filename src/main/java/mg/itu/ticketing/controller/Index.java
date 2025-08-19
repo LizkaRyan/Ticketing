@@ -6,10 +6,11 @@ import mg.itu.prom16.winter.annotation.method.Get;
 import mg.itu.prom16.winter.annotation.type.Controller;
 import mg.itu.ticketing.repository.ModeleRepository;
 
+
 @Controller
 public class Index {
 
-    private static final ModeleRepository modeleRepository=new ModeleRepository();
+    private static final ModeleRepository modeleRepository = new ModeleRepository();
 
     @Get
     public ModelAndView index(Session session){

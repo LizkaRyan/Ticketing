@@ -2,6 +2,7 @@ package mg.itu.ticketing.repository.generic;
 
 import jakarta.persistence.*;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -173,7 +174,23 @@ public class GenericRepository<T, I> {
     }
 
     public void save(T entity, EntityManager em) throws RuntimeException {
-        em.persist(entity);
+        String id="";
+        try {
+            for (Field field : entity.getClass().getDeclaredFields()) {
+                if (field.isAnnotationPresent(Id.class)) {
+                    field.setAccessible(true);
+                    id = (String) field.get(entity); // retourne la valeur de l'ID
+                }
+            }
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException("Impossible de récupérer l'ID", e);
+        }
+        if(id==null){
+            em.persist(entity);
+        }
+        else{
+            em.merge(entity);
+        }
     }
 
     public void delete(T entity) {

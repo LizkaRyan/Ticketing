@@ -109,6 +109,7 @@ CREATE TABLE reservation
     date_reservation TIMESTAMP      NOT NULL,
     prix_reservation NUMERIC(15, 2) NOT NULL,
     nb_passager      INTEGER        NOT NULL,
+    paye             SMALLINT       NOT NULL,
     id_type_siege    VARCHAR(50)    NOT NULL,
     id_utilisateur   VARCHAR(50)    NOT NULL,
     id_vol           VARCHAR(50)    NOT NULL,
