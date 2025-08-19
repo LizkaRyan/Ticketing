@@ -8,7 +8,6 @@ import mg.itu.prom16.winter.annotation.method.Post;
 import mg.itu.prom16.winter.annotation.parameter.Param;
 import mg.itu.prom16.winter.annotation.type.Controller;
 import mg.itu.prom16.winter.authentication.Authenticate;
-import mg.itu.prom16.winter.validation.generic.annotation.IfNotValidated;
 import mg.itu.ticketing.authentication.AdminAuthentication;
 import mg.itu.ticketing.controller.Dispatcher;
 import mg.itu.ticketing.dto.VolDTO;
@@ -62,11 +61,10 @@ public class VolController {
     }
 
     @Post
-    @IfNotValidated(url = "vol/form")
     public Object insert(@Param(name = "vol") VolDTO volDTO, Validator validator){
         if(!validator.isValid()){
-            Dispatcher dispatcher = new Dispatcher("vol/form",this.session);
-            dispatcher.addObject("vol",volDTO);
+            Dispatcher dispatcher = (Dispatcher) volRepository.setForm(new Dispatcher("vol/form",session));
+            dispatcher.addObject("error.vol",volDTO);
             return validator.setError(dispatcher);
         }
         return volRepository.save(volDTO);

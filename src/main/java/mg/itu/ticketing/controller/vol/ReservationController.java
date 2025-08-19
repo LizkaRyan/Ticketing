@@ -2,12 +2,14 @@ package mg.itu.ticketing.controller.vol;
 
 import mg.itu.prom16.winter.ModelAndView;
 import mg.itu.prom16.winter.Session;
+import mg.itu.prom16.winter.Validator;
 import mg.itu.prom16.winter.annotation.method.Get;
 import mg.itu.prom16.winter.annotation.method.Post;
 import mg.itu.prom16.winter.annotation.method.RestMethod;
 import mg.itu.prom16.winter.annotation.parameter.Param;
 import mg.itu.prom16.winter.annotation.type.Controller;
 import mg.itu.prom16.winter.authentication.Authenticate;
+import mg.itu.prom16.winter.authentication.NormalAuthenticator;
 import mg.itu.ticketing.authentication.ConnectedAuthentication;
 import mg.itu.ticketing.controller.Dispatcher;
 import mg.itu.ticketing.dto.reservation.ReservationDTO;
@@ -16,11 +18,8 @@ import mg.itu.ticketing.entity.personnel.Utilisateur;
 import mg.itu.ticketing.repository.vol.ReservationRepository;
 import mg.itu.ticketing.validation.reservation.ReservationValidation;
 
-import javax.servlet.http.Part;
-import java.util.Map;
-
 @Controller(mapping = "/reservation")
-//@Authenticate(ConnectedAuthentication.class)
+@Authenticate(ConnectedAuthentication.class)
 public class ReservationController {
 
     Session session;
@@ -44,12 +43,21 @@ public class ReservationController {
     }
 
     @Post
-    public String insert(@Param(name = "reservation") @ReservationValidation ReservationDTO reservation, Map<String,Part> map) throws Exception {
+    public Object insert(@Param(name = "reservation") @ReservationValidation ReservationDTO reservation, Validator validator) throws Exception {
+        if(!validator.isValid()){
+            Dispatcher dispatcher = (Dispatcher) new Dispatcher("reservation/form",session)
+                    .addObject("tranchesAge",reservationRepository.getPassePortRepo().getTrancheAgeRepo().findAll())
+                    .addObject("typeSieges",reservationRepository.getTypeSiegeRepository().findAll())
+                    .addObject("idVol",reservation.getIdVol())
+                    .addObject("error.reservation",reservation);
+            return validator.setError(dispatcher);
+        }
         return reservationRepository.save(reservation,session);
     }
 
     @RestMethod
     @Get("pdf")
+    @Authenticate(NormalAuthenticator.class)
     public ReservationPdfData findPdfReservation(@Param(name = "idReservation") String idReservation){
         return reservationRepository.findReservationById(idReservation).getPdfData();
     }
