@@ -56,6 +56,14 @@ CREATE TABLE tranche_age
     PRIMARY KEY (id_tranche_age)
 );
 
+CREATE TABLE siege_type
+(
+    id_siege_type VARCHAR(100) DEFAULT 'SGT00' || nextval('seq_siege_type'),
+    siege_type    VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id_siege_type),
+    UNIQUE (siege_type)
+);
+
 CREATE TABLE avion
 (
     id_avion         VARCHAR(50) default 'AVN00' || nextval('seq_avion'),
@@ -103,17 +111,32 @@ CREATE TABLE tranche_age_promotion
     FOREIGN KEY (id_tranche_age) REFERENCES tranche_age (id_tranche_age)
 );
 
+CREATE TABLE siege_promotion
+(
+    id_siege_promotion VARCHAR(100) DEFAULT 'SGP00' || nextval('seq_siege_promotion'),
+    date_fin           DATE           NOT NULL,
+    prix               NUMERIC(15, 2) NOT NULL,
+    nombre             INTEGER        NOT NULL,
+    id_vol             VARCHAR(50)    NOT NULL,
+    id_siege_type      VARCHAR(100)   NOT NULL,
+    PRIMARY KEY (id_siege_promotion),
+    FOREIGN KEY (id_vol) REFERENCES vol (id_vol),
+    FOREIGN KEY (id_siege_type) REFERENCES siege_type (id_siege_type)
+);
+
 CREATE TABLE reservation
 (
-    id_reservation   VARCHAR(50) default 'RSV00' || nextval('seq_reservation'),
-    date_reservation TIMESTAMP      NOT NULL,
-    prix_reservation NUMERIC(15, 2) NOT NULL,
-    nb_passager      INTEGER        NOT NULL,
-    paye             SMALLINT       NOT NULL,
-    id_type_siege    VARCHAR(50)    NOT NULL,
-    id_utilisateur   VARCHAR(50)    NOT NULL,
-    id_vol           VARCHAR(50)    NOT NULL,
+    id_reservation     VARCHAR(50) default 'RSV00' || nextval('seq_reservation'),
+    date_reservation   TIMESTAMP      NOT NULL,
+    prix_reservation   NUMERIC(15, 2) NOT NULL,
+    nb_passager        INTEGER        NOT NULL,
+    paye               SMALLINT       NOT NULL,
+    id_siege_promotion VARCHAR(100)   NOT NULL,
+    id_type_siege      VARCHAR(50)    NOT NULL,
+    id_utilisateur     VARCHAR(50)    NOT NULL,
+    id_vol             VARCHAR(50)    NOT NULL,
     PRIMARY KEY (id_reservation),
+    FOREIGN KEY (id_siege_promotion) REFERENCES siege_promotion (id_siege_promotion),
     FOREIGN KEY (id_type_siege) REFERENCES type_siege (id_type_siege),
     FOREIGN KEY (id_utilisateur) REFERENCES utilisateur (id_utilisateur),
     FOREIGN KEY (id_vol) REFERENCES vol (id_vol)

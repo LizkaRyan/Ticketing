@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import mg.itu.ticketing.dto.reservation.PasseportPdfData;
 import mg.itu.ticketing.dto.reservation.ReservationPdfData;
+import mg.itu.ticketing.entity.avion.SiegePromotion;
 import mg.itu.ticketing.entity.avion.TypeSiege;
 import mg.itu.ticketing.entity.personnel.Utilisateur;
 
@@ -40,6 +41,10 @@ public class Reservation {
     @ManyToOne(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH})
     @JoinColumn(name = "id_type_siege")
     private TypeSiege typeSiege;
+
+    @ManyToOne(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH})
+    @JoinColumn(name = "id_siege_promotion")
+    private SiegePromotion siegePromotion;
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH})
     @JoinColumn(name = "id_utilisateur")

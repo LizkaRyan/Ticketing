@@ -9,6 +9,8 @@
         <class>mg.itu.ticketing.entity.avion.Avion</class>
         <class>mg.itu.ticketing.entity.avion.TypeSiege</class>
         <class>mg.itu.ticketing.entity.avion.AvionSiege</class>
+        <class>mg.itu.ticketing.entity.avion.SiegePromotion</class>
+        <class>mg.itu.ticketing.entity.avion.TypeSiege</class>
         <class>mg.itu.ticketing.entity.personnel.Utilisateur</class>
         <class>mg.itu.ticketing.entity.personnel.Role</class>
         <class>mg.itu.ticketing.entity.vol.Vol</class>

@@ -6,12 +6,14 @@ import jakarta.persistence.Persistence;
 import lombok.Getter;
 import mg.itu.prom16.winter.Session;
 import mg.itu.ticketing.dto.reservation.ReservationDTO;
+import mg.itu.ticketing.entity.avion.SiegePromotion;
 import mg.itu.ticketing.entity.personnel.Utilisateur;
 import mg.itu.ticketing.entity.vol.Reservation;
 import mg.itu.ticketing.repository.avion.TypeSiegeRepository;
 import mg.itu.ticketing.repository.generic.GenericRepository;
 import mg.itu.ticketing.repository.personnel.UtilisateurRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -20,6 +22,7 @@ public class ReservationRepository extends GenericRepository<Reservation,String>
     private VolRepository volRepository=new VolRepository();
     private UtilisateurRepository utilisateurRepository=new UtilisateurRepository();
     private PassePortRepo passePortRepo=new PassePortRepo();
+    private SiegePromotionRepo siegePromotionRepo = new SiegePromotionRepo();
 
     public String save(ReservationDTO reservationDTO, Session session)throws Exception{
         Utilisateur utilisateur=(Utilisateur) session.get("utilisateur");

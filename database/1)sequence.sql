@@ -13,3 +13,5 @@ CREATE SEQUENCE seq_parametre_reservation;
 CREATE SEQUENCE seq_tranche_age;
 CREATE SEQUENCE seq_tranche_age_promotion;
 CREATE SEQUENCE seq_passeport;
+CREATE SEQUENCE seq_siege_promotion;
+CREATE SEQUENCE seq_siege_type;
