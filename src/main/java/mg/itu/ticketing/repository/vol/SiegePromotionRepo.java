@@ -18,7 +18,7 @@ public class SiegePromotionRepo extends GenericRepository<SiegePromotion,String>
     private final AnnulationReservationRepo annulationReservationRepo = new AnnulationReservationRepo();
 
     public List<SiegePromotion> findSiegePromotion(LocalDate date, EntityManager em){
-        return this.findRequest("select s from SiegePromotion s join fetch s.reservations where s.dateFin < :date",em,typedQuery -> {
+        return this.findRequest("select s from SiegePromotion s join fetch s.reservations where s.dateFin < :date order by s.dateFin asc",em,typedQuery -> {
             typedQuery.setParameter("date",date);
         });
     }
@@ -36,6 +36,8 @@ public class SiegePromotionRepo extends GenericRepository<SiegePromotion,String>
                 }
             }
             if(nbNonPaye!=0 && siegePromotion.getNext()!=null){
+                siegePromotion.setNombre(siegePromotion.getNombre()-nbNonPaye);
+                this.save(siegePromotion,em);
                 SiegePromotion next = siegePromotion.getNext();
                 next.setNombre(next.getNombre()+nbNonPaye);
                 this.save(next,em);
