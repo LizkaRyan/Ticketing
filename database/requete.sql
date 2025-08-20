@@ -10,3 +10,13 @@ from siege_promotion s1_0
 where s1_0.date_fin < '2025-08-29';
 
 select * from reservation where id_reservation not in (select id_reservation from annulation_reservation);
+
+select sum(prix_reservation) as prix_reservation from reservation where id_reservation not in (select id_reservation from annulation_reservation);
+
+select count(*) as nb_ticket_vendu from reservation where id_reservation not in (select id_reservation from annulation_reservation);
+
+select sum(resultat) from (
+select -count(r) as resultat from reservation r
+    where id_reservation not in (select id_reservation from annulation_reservation)
+union
+select sum(nombre) as resultat from siege_promotion) as sub_request;
