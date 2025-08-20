@@ -54,6 +54,9 @@ public class SiegePromotionRepo extends GenericRepository<SiegePromotion,String>
             updateData(siegePromotions,em);
             em.getTransaction().commit();
         }
+        catch (Exception ex){
+            em.getTransaction().rollback();
+        }
         finally {
             em.close();
             emf.close();

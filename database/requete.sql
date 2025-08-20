@@ -17,8 +17,12 @@ select sum(prix_reservation) as prix_reservation from reservation where id_reser
 
 select count(*) as nb_ticket_vendu from reservation where id_reservation not in (select id_reservation from annulation_reservation);
 
-select sum(resultat) from (
+select sum(resultat) as nb_ticket_non_vendu from (
 select -count(r) as resultat from reservation r
     where id_reservation not in (select id_reservation from annulation_reservation)
 union
 select sum(nombre) as resultat from siege_promotion) as sub_request;
+
+select sum(r.prix_reservation) from reservation r where r.id_reservation not in (select id_reservation from annulation_reservation) and r.id_vol = 'VOL006';
+
+select sum(r.prix_reservation) from reservation r where r.id_reservation not in (select id_reservation from annulation_reservation) and r.id_vol = 'VOL007';
